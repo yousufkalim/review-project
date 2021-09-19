@@ -9,6 +9,9 @@ module.exports = {
   login,
   signUp,
   getById,
+  checkAuth,
+  loggedIn,
+  logout,
 };
 
 async function getAll(req, res) {
@@ -47,6 +50,18 @@ async function signUp(req, res) {
   }
 }
 
+function checkAuth(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.json({ error: "Authenctication Failed" });
+  }
+}
+
+async function loggedIn(req, res) {
+  res.json({ status: 200, user: req.user });
+}
+
 async function login(req, res, next) {
   try {
     passport.authenticate("local", (err, user, info) => {
@@ -57,10 +72,19 @@ async function login(req, res, next) {
       } else {
         req.logIn(user, (err) => {
           if (err) throw err;
-          res.send("Successfully Authenticated");
+          res.send(user);
         });
       }
     })(req, res, next);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function logout(req, res, next) {
+  try {
+    req.logOut();
+    req.status(200).send("Logout successfully");
   } catch (err) {
     res.status(500).json(err);
   }

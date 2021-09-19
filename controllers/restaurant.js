@@ -8,11 +8,21 @@ module.exports = {
   getAll,
   create,
   getById,
+  getByOwnerId,
 };
 
 async function getAll(req, res) {
   try {
     let restaurant = await Restaurant.find();
+    res.json({ status: 200, restaurant });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function getByOwnerId(req, res) {
+  try {
+    let restaurant = await Restaurant.find({ owner: req.params.id });
     res.json({ status: 200, restaurant });
   } catch (err) {
     res.status(500).json(err);
@@ -37,6 +47,7 @@ async function create(req, res) {
     if (req.file) {
       req.body = { ...req.body, image: req.file.path };
     }
+    console.log("request: ", req.body.image);
 
     const restaurant = new Restaurant(req.body);
     await restaurant.save();

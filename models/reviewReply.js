@@ -5,11 +5,8 @@ const reviewReplySchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  comments: {
-    type: String,
-    required: true,
-  },
-  owner: { type: Schema.Types.ObjectId, ref: "review" },
+  review: { type: mongoose.Schema.Types.ObjectId, ref: "review" },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
 });
 
 module.exports = mongoose.model("reviewReply", reviewReplySchema);

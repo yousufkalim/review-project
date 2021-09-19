@@ -38,8 +38,10 @@ mongoose.connection.once("open", () => console.log("connected to mongoDB"));
 
 app.use("/user", require("./routes/user"));
 app.use("/restaurant", require("./routes/restaurant"));
-// app.use("/review", require("./routes/review"));
+app.use("/review", require("./routes/review"));
 // app.use("/reviewReply", require("./routes/reviewReply"));
+
+app.use("/uploads/restaurants", express.static("./uploads/restaurants"));
 
 // listening to server
 
