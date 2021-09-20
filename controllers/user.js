@@ -1,5 +1,7 @@
 const db = require("../utils/db");
 const User = db.User;
+const Review = db.Review;
+const Restaurant = db.Restaurant;
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 require("../utils/passportConfig")(passport);
@@ -12,6 +14,8 @@ module.exports = {
   checkAuth,
   loggedIn,
   logout,
+  edit,
+  _delete,
 };
 
 async function getAll(req, res) {
@@ -45,6 +49,30 @@ async function signUp(req, res) {
 
     await user.save();
     res.json({ status: 200, user });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function edit(req, res) {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.json({ status: 200, user });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function _delete(req, res) {
+  try {
+    if (await Review.findOne({ user: req.params.id })) {
+      res.json({ status: 200, message: "Delete Review First!" });
+    } else if (await Restaurant.findOne({ owner: req.params.id })) {
+      res.json({ status: 200, message: "Delete Reply First!" });
+    } else {
+      await User.findByIdAndDelete(req.params.id);
+      res.json({ status: 200, message: "Deleted successfully!" });
+    }
   } catch (err) {
     res.status(500).json(err);
   }

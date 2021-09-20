@@ -6,6 +6,7 @@ const {
   getAll,
   create,
   getById,
+  _delete,
   getByOwnerId,
 } = require("../controllers/restaurant");
 
@@ -25,5 +26,6 @@ router.get("/", getAll);
 router.get("/getbyid/:id", getById);
 router.get("/getbyownerid/:id", getByOwnerId);
 router.post("/create", uploadRestaurant.single("image"), create);
+router.delete("/delete/:id", _delete);
 
 module.exports = router;

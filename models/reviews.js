@@ -11,7 +11,7 @@ const reviewsSchema = mongoose.Schema({
   },
   reply: { type: Boolean, default: false },
   restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "restaurant" },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "user", unique: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
 });
 
 module.exports = mongoose.model("reviews", reviewsSchema);

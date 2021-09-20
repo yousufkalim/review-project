@@ -1,6 +1,6 @@
 const db = require("../utils/db");
 const Restaurant = db.Restaurant;
-const bcrypt = require("bcryptjs");
+const Review = db.Review;
 const passport = require("passport");
 require("../utils/passportConfig")(passport);
 
@@ -9,6 +9,7 @@ module.exports = {
   create,
   getById,
   getByOwnerId,
+  _delete,
 };
 
 async function getAll(req, res) {
@@ -52,6 +53,19 @@ async function create(req, res) {
     const restaurant = new Restaurant(req.body);
     await restaurant.save();
     res.json({ status: 200, restaurant });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+async function _delete(req, res) {
+  try {
+    if (await Review.findOne({ restaurant: req.params.id })) {
+      res.json({ status: 200, message: "Delete Review First!" });
+    } else {
+      await Restaurant.findByIdAndDelete(req.params.id);
+      res.json({ status: 200, message: "Deleted successfully!" });
+    }
   } catch (err) {
     res.status(500).json(err);
   }

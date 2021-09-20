@@ -5,18 +5,18 @@ const {
   getAll,
   create,
   getById,
-  getByRestaurantId,
-  replied,
+  getByReviewId,
+  getByOwnerId,
   _delete,
-} = require("../controllers/review");
+} = require("../controllers/reviewReply");
 
 // controllers
 
 router.get("/", getAll);
 router.get("/getbyid/:id", getById);
-router.get("/getByRestaurantId/:id", getByRestaurantId);
+router.get("/getByReviewId/:id", getByReviewId);
+router.get("/getByOwnerId/:id", getByOwnerId);
 router.post("/create", create);
-router.put("/replied/:id", replied);
 router.delete("/delete/:id", _delete);
 
 module.exports = router;

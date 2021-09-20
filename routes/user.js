@@ -9,6 +9,8 @@ const {
   loggedIn,
   checkAuth,
   logout,
+  edit,
+  _delete,
 } = require("../controllers/user");
 
 // controllers
@@ -19,5 +21,7 @@ router.get("/loggedin", checkAuth, loggedIn);
 router.delete("/logout", logout);
 router.post("/signup", signUp);
 router.get("/getbyid/:id", getById);
+router.put("/edit/:id", edit);
+router.delete("/delete/:id", _delete);
 
 module.exports = router;
