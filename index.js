@@ -24,6 +24,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.use("/", express.static(__dirname + "/client/build/index.html"));
+app.use("/", express.static("./client/build"));
+
 // Conecting with DB
 
 const url =
@@ -36,10 +39,10 @@ mongoose.connection.once("open", () => console.log("connected to mongoDB"));
 
 // api routes
 
-app.use("/user", require("./routes/user"));
-app.use("/restaurant", require("./routes/restaurant"));
-app.use("/review", require("./routes/review"));
-app.use("/reviewReply", require("./routes/reviewReply"));
+app.use("/api/user", require("./routes/user"));
+app.use("/api/restaurant", require("./routes/restaurant"));
+app.use("/api/review", require("./routes/review"));
+app.use("/api/reviewReply", require("./routes/reviewReply"));
 
 app.use("/uploads/restaurants", express.static("./uploads/restaurants"));
 
