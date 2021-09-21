@@ -68,7 +68,7 @@ async function _delete(req, res) {
     if (await Review.findOne({ user: req.params.id })) {
       res.json({ status: 200, message: "Delete Review First!" });
     } else if (await Restaurant.findOne({ owner: req.params.id })) {
-      res.json({ status: 200, message: "Delete Reply First!" });
+      res.json({ status: 200, message: "Delete Restaurant First!" });
     } else {
       await User.findByIdAndDelete(req.params.id);
       res.json({ status: 200, message: "Deleted successfully!" });
@@ -112,7 +112,7 @@ async function login(req, res, next) {
 async function logout(req, res, next) {
   try {
     req.logOut();
-    req.status(200).send("Logout successfully");
+    res.status(200).send("Logout successfully");
   } catch (err) {
     res.status(500).json(err);
   }
