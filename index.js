@@ -3,16 +3,20 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
+const path = require("path");
+const logger = require("morgan");
 
 // Initializing app and port
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 // middlewares
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({ credentials: true, origin: true }));
+app.use(logger("dev"));
 
 app.use(
   session({
@@ -25,7 +29,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use("/", express.static(__dirname + "/client/build/index.html"));
-app.use("/", express.static("./client/build"));
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+app.get("/", (req, res) => {
+  res.sendFile(
+    express.static(path.join(__dirname, "client", "build", "index.html"))
+  );
+});
 
 // Conecting with DB
 
