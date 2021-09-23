@@ -29,12 +29,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use("/", express.static(__dirname + "/client/build/index.html"));
-app.use(express.static(path.join(__dirname, "client", "build")));
+app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/", (req, res) => {
-  res.sendFile(
-    express.static(path.join(__dirname, "client", "build", "index.html"))
-  );
+  res.sendFile(express.static(path.join(__dirname, "build", "index.html")));
 });
 
 // Conecting with DB
